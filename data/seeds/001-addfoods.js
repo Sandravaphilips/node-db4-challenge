@@ -4,8 +4,8 @@ exports.seed = function(knex) {
   return knex('foods').truncate()
     .then(function () {
       // Inserts seed entries
-      return knex('foodse').insert([
-        {id: 1, food: 'rice'}
+      return knex('foods').insert([
+        {id: 1, food: 'white rice'}
         
       ]);
     });

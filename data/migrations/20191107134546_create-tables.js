@@ -26,11 +26,6 @@ exports.up = function(knex) {
         .notNullable()
         .references('id')
         .inTable('foods');
-        table.integer('recipe_id')
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('recipes');
         table.integer('ingredient_id')
         .unsigned()
         .notNullable()
