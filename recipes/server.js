@@ -18,7 +18,7 @@ server.get('/api/recipes', (req, res) => {
   });
 });
 
-server.get('/api/recipes/:id/shoppinglist', (req, res) => {
+server.get('/api/recipes/:id/shoppinglist', validateId, (req, res) => {
     const {id} = req.params;
     Recipes.getShoppingList(id)
     .then(list => {
@@ -29,7 +29,7 @@ server.get('/api/recipes/:id/shoppinglist', (req, res) => {
     });
 });
 
-server.get('/api/recipes/:id/steps', (req, res) => {
+server.get('/api/recipes/:id/steps', validateId, (req, res) => {
     const {id} = req.params;
     Recipes.getInstructions(id)
     .then(steps => res.status(200).json(steps))
@@ -42,12 +42,19 @@ server.get('/api/ingredients', (req, res) => {
   .catch(err => res.status(500).json(err))
 })
 
-server.get('/api/ingredients/:id/recipes', (req, res) => {
+server.get('/api/ingredients/:id/recipes', validateId, (req, res) => {
   const {id} = req.params;
   Recipes.getRecipeById(id)
   .then(recipes => res.status(200).json(recipes))
   .catch(err => res.status(500).json(err))
 })
 
-
+const validateId = (req, res, next) => {
+  const {id} = req.params;
+  if (!id) {
+    res.json({message: "please provide a valid id"})
+  } else {
+    next()
+  }
+}
 module.exports = server;
